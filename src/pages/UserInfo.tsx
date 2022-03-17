@@ -1,8 +1,12 @@
 import { useParams, Link } from "react-router-dom";
+import { useContactQuery } from "../app/hooks";
 import "./UserInfo.css";
 
 const UserInfo = () => {
   const { id } = useParams();
+  const { data, isError, isFetching, isLoading, isSuccess } = useContactQuery({ id });
+
+  
   return (
     <div style={{ marginTop: "150px" }}>
       <div className="card">
@@ -11,19 +15,19 @@ const UserInfo = () => {
         </div>
         <div className="container">
           <strong>ID: </strong>
-          <span>1</span>
+          <span>{data?.id}</span>
           <br />
           <br />
           <strong>Name: </strong>
-          <span>Test</span>
+          <span>{data?.name}</span>
           <br />
           <br />
           <strong>Email: </strong>
-          <span>test@gmail.com</span>
+          <span>{data?.email}</span>
           <br />
           <br />
           <strong>Contact: </strong>
-          <span>775675673</span>
+          <span>{data?.phone}</span>
           <br />
           <br />
           <Link to="/">

@@ -59,3 +59,20 @@
 .btn-add {
   background-color: #f45646;
 }
+
+.loading-container {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-container {
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #009879;
+}
+
+.info-container > h1 {
+  color: #fff;
+}

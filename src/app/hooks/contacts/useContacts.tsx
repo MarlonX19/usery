@@ -1,3 +1,3 @@
 import { contactsApi } from '../../../services';
 
-export const { useContactsQuery } = contactsApi;
+export const { useContactQuery, useContactsQuery, useAddContactMutation, useDeleteContactMutation } = contactsApi;

@@ -16,13 +16,13 @@ type companyType = {
 }
 
 export interface Contact {
-    id: string | number,
+    id?: string | number | undefined,
     name: string,
-    username: string,
+    username?: string,
     email: string,
-    contact: string,
-    address: contactAddress,
-    phone: string,
-    website: string,
-    company: companyType
+    contact?: string
+    address?: contactAddress,
+    phone?: string,
+    website?: string,
+    company?: companyType
 }

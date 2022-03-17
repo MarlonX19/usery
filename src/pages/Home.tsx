@@ -1,23 +1,36 @@
+import { useEffect } from "react";
+import Spinner from 'react-bootstrap/Spinner'
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./Home.css";
-import { useContactsQuery } from "../app/hooks";
+import { useContactsQuery, useDeleteContactMutation } from "../app/hooks";
 import { Contact } from "../app/models";
 
 const Home = () => {
   const { data, error, isLoading, isSuccess , isFetching } = useContactsQuery();
+  const [deleteContact, status ] = useDeleteContactMutation();
+  const { isSuccess: deletedContact } = status;
 
+  console.log('===isFetching', isFetching)
 
   const handleDelete = async (id: any) => {
     if (window.confirm("Are you sure that you wanted to delete that user ?")) {
-      toast.success("Contact Deleted Successfully");
+      deleteContact(id);
     }
   };
 
+  useEffect(() => {
+    if(deletedContact) {
+      toast.success("Contact Deleted Successfully");
+    }
+  },[deletedContact])
+
   if(isLoading) {
     return (
-      <div style={{ display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
-        <h1>Loading users' information</h1>
+      <div className="loading-container">
+        <div className="info-container">
+          <h1>Loading users' information...</h1>
+        </div>
       </div>
     )
   }

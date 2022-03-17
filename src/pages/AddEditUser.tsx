@@ -2,18 +2,22 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAddContactMutation } from '../app/hooks'
+import { Contact } from "../app/models";
 import "./AddEditUser.css";
 
 const initialState = {
   name: "",
   email: "",
-  contact: "",
+  phone: "",
 };
 
 const AddEditUser = () => {
-  const [formValue, setFormValue] = useState(initialState);
-  const [editMode, setEditMode] = useState(false);
-  const { name, email, contact } = formValue;
+  const [addContact] = useAddContactMutation();
+
+  const [formValue, setFormValue] = useState<Contact>(initialState);
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const { name, email, phone } = formValue;
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -27,11 +31,12 @@ const AddEditUser = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (!name && !email && !contact) {
+    if (!name && !email && !phone) {
       toast.error("Please provide value into each input field");
     } else {
       if (!editMode) {
         navigate("/");
+        addContact(formValue)
         toast.success("Contact Added Successfully");
       } else {
         navigate("/");
@@ -47,15 +52,7 @@ const AddEditUser = () => {
   };
   return (
     <div style={{ marginTop: "100px" }}>
-      <form
-        style={{
-          margin: "auto",
-          padding: "15px",
-          maxWidth: "400px",
-          alignContent: "center",
-        }}
-        onSubmit={handleSubmit}
-      >
+      <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name</label>
         <input
           type="text"
@@ -74,16 +71,15 @@ const AddEditUser = () => {
           value={email || ""}
           onChange={handleInputChange}
         />
-        <label htmlFor="contact">Contact</label>
+        <label htmlFor="phone">Phone</label>
         <input
           type="text"
-          id="contact"
-          name="contact"
-          placeholder="Your Contact No. ..."
-          value={contact || ""}
+          id="phone"
+          name="phone"
+          placeholder="Your phone No. ..."
+          value={phone || ""}
           onChange={handleInputChange}
         />
-
         <input type="submit" value={id ? "Update" : "Save"} />
       </form>
     </div>
